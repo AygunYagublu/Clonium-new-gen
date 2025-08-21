@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chain Reaction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+  <main>
+
+    <!-- MAIN MENU -->
+    <div class="card" id="mainMenu">
+      <h1>Chain Reaction</h1>
+      <div class="menu-buttons">
+        <button onclick="openSettingsMenu()">Start Game</button>
+        <button onclick="openSettingsPlaceholder()">Settings</button>
+        <button onclick="exitGame()">Exit Game</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS MENU -->
+    <div class="card hidden" id="settingsMenu">
+      <h2>Game Settings</h2>
+      <div class="row">
+        <label>Grid Size</label>
+        <input type="number" id="gridSizeInput" min="5" max="12" value="6">
+      </div>
+      <div class="row">
+        <label>Players</label>
+        <input type="number" id="playersInput" min="2" max="4" value="2">
+      </div>
+      <div class="row">
+        <label>AI Bots</label>
+        <input type="number" id="botsInput" min="0" max="3" value="1">
+      </div>
+      <div class="row">
+        <label>AI Type</label>
+        <select id="aiTypeSelect">
+          <option value="random">Random</option>
+          <option value="greedy">Greedy</option>
+        </select>
+      </div>
+
+      <!-- Theme -->
+      <div class="row">
+        <label>Theme</label>
+        <select id="themeSelect">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+          <option value="neon">Neon</option>
+        </select>
+      </div>
+
+      <!-- Volume -->
+      <div class="row">
+        <label>Volume</label>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1">
+      </div>
+
+      <!-- Player Colors -->
+      <div id="colorSettingsWrap"></div>
+
+      <div class="row">
+        <button onclick="startGame()">Start</button>
+        <button class="ghost" onclick="backToMainMenu()">Back</button>
+      </div>
+    </div>
+
+    <!-- GAME UI -->
+    <div class="card hidden" id="gameUI">
+      <div class="hud">
+        <span id="turnText">
+          <span id="turnColor" class="turn-color"></span>
+          <span id="turnLabel"></span>
+        </span>
+        <div class="buttons">
+          <button id="howToPlayBtn" class="ghost">How to Play</button>
+          <button class="ghost" onclick="restartGame()">Restart</button>
+          <button class="ghost" onclick="backToMainMenu()">Menu</button>
+        </div>
+      </div>
+
+      <div id="boardWrap">
+        <div id="board"></div>
+        <canvas id="explosionCanvas"></canvas>
+      </div>
+
+      <div id="status"></div>
+    </div>
+
+    <!-- Winner Banner -->
+    <div id="winnerBanner" class="hidden"></div>
+
+    <!-- How to Play Modal -->
+    <div id="howToPlayModal" class="modal hidden">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <h2 id="modalTitle">How to Play</h2>
+        <p>
+          Players take turns placing orbs in their own cells or empty ones.<br>
+          When a cell reaches capacity (2 on corners, 3 on edges, 4 inside), it explodes to adjacent cells.<br>
+          Explosions can chain-react.<br>
+          You win when you are the last player with any cells left.
+        </p>
+        <button onclick="closeHowToPlay()">Close</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Explosion sound -->
+  <audio id="explosionSound" src="explosion.mp3" preload="auto"></audio>
+
+  <script src="game.js"></script>
+</body>
+</html>
